@@ -12,6 +12,16 @@ operating system.
 This module provides a consistent API to this functionality regardless of the
 underlying platform.
 
+```Perl6
+  use File::Which;
+
+  # All perl executables in PATH
+  say which( :exec('perl'), :all);
+
+  # First executable in PATH
+  say which( :exec('perl'));
+```
+
 ## File::Which Installation
 
 To install it using Panda (a module management tool bundled with Rakudo Star):

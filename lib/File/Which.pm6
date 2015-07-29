@@ -8,12 +8,21 @@ use v6;
   platforms, such as Microsoft Windows it is not provided as part of the core
   operating system.
 
-  TODO document
+    use File::Which;
+    
+    # All perl executables in PATH
+    say which( :exec('perl'), :all);
+    
+    # First executable in PATH
+    say which( :exec('perl'));
+
 =end pod
 module File::Which {
 
   constant IS_MAC = $*DISTRO.name eq 'macosx';
   constant IS_WIN = $*DISTRO.name eq 'mswin32';
+  # Removed support for VMS
+  # Delayed support for CYGWIN
 
   # For Win32 systems, stores the extensions used for executable files
   # For others, the empty string is used because 'perl' . '' eq 'perl' => easier
@@ -29,7 +38,7 @@ module File::Which {
   }
 
 
-  sub which(Str $exec) is export {
+  sub which(Str :$exec, Bool :$all = False) is export {
     fail("Exec parameter should be defined") unless $exec;
 
     my @results;
@@ -44,6 +53,7 @@ module File::Which {
         if $alias.lc eq $exec.lc {
           chomp(my $file = qx<Alias $alias>);
           last unless $file;  # if it failed, just go on the normal way
+          return $file unless $all;
           @results.push( $file );
           last;
         }
@@ -53,21 +63,21 @@ module File::Which {
     return $exec
             if !IS_MAC && !IS_WIN && $exec ~~ /\// && $exec.IO ~~ :f && $exec.IO ~~ :x;
 
-    my @path = File::Spec.path;
+    my @path = $*SPEC.path;
     if IS_WIN {
-       @path.unshift( File::Spec.curdir );
+       @path.unshift( $*SPEC.curdir );
     }
 
-    for  @path.map({ File::Spec.catfile($_, $exec) }) -> $base  {
+    for  @path.map({ $*SPEC.catfile($_, $exec) }) -> $base  {
       for @PATHEXT -> $ext {
         my $file = $base ~ $ext;
 
-        # We don't want dirs (as they are -x)
+        # Ignore possibly -x directories
         next if $file.IO ~~ :d;
 
         if (
           # Executable, normal case
-          $_ ~~ :x
+          $file.IO ~~ :x
           || (
             # MacOS doesn't mark as executable so we check -e
             IS_MAC
@@ -81,26 +91,17 @@ module File::Which {
             # non-exe/bat/com files. so we check -e.
             # However, we don't want to pass -e on files
             # that aren't in PATHEXT, like README.
-            && $_ ~~ :e
+            && $file.IO ~~ :e
           )
         ) {
+          return $file unless $all;
           @results.push( $file );
         }
       }
     }
 
-    return @results;
-  }
-
-=begin pod
-TODO document
-=end pod
-  sub where {
-    !!!
-
-    # force wantarray
-    my @res = which($_[0]);
-    return @res;
+    return @results if $all;
+    return;
   }
 
 }
