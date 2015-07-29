@@ -27,6 +27,7 @@ To run tests:
 
 ## Author
 
+Perl 6 port:
 - Ahmad M. Zawawi, azawawi on #perl6, https://github.com/azawawi/
 
 Perl 5 version:
