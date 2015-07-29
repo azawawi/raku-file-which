@@ -11,10 +11,10 @@ use v6;
     use File::Which;
     
     # All perl executables in PATH
-    say which( :exec('perl'), :all);
+    say which('perl', :all);
     
     # First executable in PATH
-    say which( :exec('perl'));
+    say which('perl');
 
 =end pod
 module File::Which {
@@ -37,8 +37,7 @@ module File::Which {
     }
   }
 
-
-  sub which(Str :$exec, Bool :$all = False) is export {
+  sub which(Str $exec, Bool :$all = False) is export {
     fail("Exec parameter should be defined") unless $exec;
 
     my @results;

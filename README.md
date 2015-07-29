@@ -16,10 +16,10 @@ underlying platform.
   use File::Which;
 
   # All perl executables in PATH
-  say which( :exec('perl'), :all);
+  say which('perl', :all);
 
   # First executable in PATH
-  say which( :exec('perl'));
+  say which('perl');
 ```
 
 ## File::Which Installation
