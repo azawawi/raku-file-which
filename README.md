@@ -22,7 +22,7 @@ underlying platform.
   say which('perl');
 ```
 
-## File::Which Installation
+## Installation
 
 To install it using Panda (a module management tool bundled with Rakudo Star):
 
