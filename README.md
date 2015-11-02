@@ -1,5 +1,4 @@
-# File::Which
-[![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which)
+# File::Which [![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which)
 
 This is a Perl 6 port of https://metacpan.org/pod/File::Which.
 
@@ -26,14 +25,18 @@ underlying platform.
 
 To install it using Panda (a module management tool bundled with Rakudo Star):
 
-    panda update
-    panda install File::Which
+```
+$ panda update
+$ panda install File::Which
+```
 
 ## Testing
 
 To run tests:
 
-    prove -e perl6
+```
+$ prove -e "perl6 -Ilib"
+```
 
 ## Author
 
