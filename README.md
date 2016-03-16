@@ -21,6 +21,13 @@ say which('perl', :all);
 say which('perl');
 ```
 
+## Build Status
+
+| Operating System  |   Build Status  | CI Provider |
+| ----------------- | --------------- | ----------- |
+| Linux / Mac OS X  | [![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which)  | Travis CI |
+| Windows 7 64-bit  | [![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)  | AppVeyor |
+
 ## Installation
 
 To install it using Panda (a module management tool bundled with Rakudo Star):
@@ -51,4 +58,4 @@ Perl 5 version:
 
 ## License
 
-Artistic License 2.0
+MIT License
