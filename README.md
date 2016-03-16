@@ -1,4 +1,4 @@
-# File::Which [![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which)
+# File::Which
 
 This is a Perl 6 port of https://metacpan.org/pod/File::Which.
 
