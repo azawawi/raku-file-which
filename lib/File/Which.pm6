@@ -21,24 +21,22 @@ use File::Which::Win32;
     say which('perl');
 
 =end pod
-module File::Which {
+unit module File::Which;
 
-  # Current which platform-specific implementation
-  my $platform;
+# Current which platform-specific implementation
+my $platform;
 
-  sub which(Str $exec, Bool :$all = False) is export {
+sub which(Str $exec, Bool :$all = False) is export {
 
-    unless $platform.defined {
-      if $*DISTRO.is-win {
-        $platform = File::Which::Win32.new;
-      } elsif $*DISTRO.name eq 'macosx' {
-        $platform = File::Which::MacOSX.new;
-      } else {
-        $platform = File::Which::Unix.new;
-      }
+  unless $platform.defined {
+    if $*DISTRO.is-win {
+      $platform = File::Which::Win32.new;
+    } elsif $*DISTRO.name eq 'macosx' {
+      $platform = File::Which::MacOSX.new;
+    } else {
+      $platform = File::Which::Unix.new;
     }
-
-    return $platform.which($exec, :$all);
   }
 
+  return $platform.which($exec, :$all);
 }
