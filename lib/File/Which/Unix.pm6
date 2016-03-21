@@ -1,9 +1,9 @@
 
 use v6;
 
-unit module File::Which::Unix;
+unit class File::Which::Unix;
 
-sub which(Str $exec, Bool :$all = False) {
+method which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
 
   my @results;
