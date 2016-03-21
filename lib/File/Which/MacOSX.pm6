@@ -1,9 +1,9 @@
 
 use v6;
 
-unit role File::Which::MacOSX;
+unit module File::Which::MacOSX;
 
-sub which(Str $exec, Bool :$all = False) is export {
+sub which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
 
   my @results;
