@@ -44,9 +44,9 @@ method which(Str $exec, Bool :$all = False) {
     }
   }
 
-    return @results.unique if $all;
-    return;
-  }
+  return @results.unique if $all;
+  return;
+}
 
 =begin pod
 
