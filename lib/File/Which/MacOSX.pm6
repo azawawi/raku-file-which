@@ -27,19 +27,25 @@ method which(Str $exec, Bool :$all = False) {
 
   for  @path.map({ $*SPEC.catfile($_, $exec) }) -> $file  {
 
-      # Ignore possibly -x directories
-      next if $file.IO ~~ :d;
+    # Ignore possibly -x directories
+    next if $file.IO ~~ :d;
 
-      if
-        # Executable, normal case
-        $file.IO ~~ :x
-        # MacOS doesn't mark as executable so we check -e
-        || $file.IO ~~ :e
-      {
-        return $file unless $all;
+    if
+      # Executable, normal case
+      $file.IO ~~ :x
+      # MacOS doesn't mark as executable so we check -e
+      || $file.IO ~~ :e
+    {
+      if $all {
         @results.push( $file );
+      } else {
+        return $file;
       }
     }
+  }
+
+    return @results.unique if $all;
+    return;
   }
 
 =begin pod

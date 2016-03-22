@@ -20,13 +20,16 @@ method which(Str $exec, Bool :$all = False) {
 
     # Executable, normal case
     if $file.IO ~~ :x {
-      return $file unless $all;
-      @results.push( $file );
+      if $all {
+        @results.push( $file );
+      } else {
+        return $file;
+      }
     }
 
   }
 
-  return @results if $all;
+  return @results.unique if $all;
   return;
 }
 
