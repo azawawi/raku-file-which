@@ -15,10 +15,10 @@ underlying platform.
 use File::Which;
 
 # All perl executables in PATH
-say which('perl', :all);
+say which('perl6', :all);
 
 # First executable in PATH
-say which('perl');
+say which('perl6');
 ```
 
 ## Build Status

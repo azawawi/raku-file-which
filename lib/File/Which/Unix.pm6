@@ -36,4 +36,25 @@ method which(Str $exec, Bool :$all = False) {
 
 File::Which::Unix - Linux/Unix which implementation
 
+=head1 SYNOPSIS
+
+  use File::Which::Unix;
+  my $o = File::Which::Unix.new;
+  say $o.which('perl6');
+
+=head1 DESCRIPTION
+
+Implements the which method under UNIX-based platforms
+
+=head1 AUTHOR
+
+Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2016 Ahmad M. Zawawi
+
+This library is free software; you can redistribute it and/or modify it under
+the MIT License
+
 =end pod

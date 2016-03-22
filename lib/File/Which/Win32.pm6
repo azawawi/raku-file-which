@@ -49,4 +49,25 @@ method which(Str $exec, Bool :$all = False) {
 
 File::Which::Win32 - Win32 which implementation
 
+=head1 SYNOPSIS
+
+  use File::Which::Win32;
+  my $o = File::Which::Win32.new;
+  say $o.which('perl6');
+
+=head1 DESCRIPTION
+
+Implements the which method under win32-based platforms
+
+=head1 AUTHOR
+
+Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2016 Ahmad M. Zawawi
+
+This library is free software; you can redistribute it and/or modify it under
+the MIT License
+
 =end pod
