@@ -12,4 +12,8 @@ my $perl6 = which('perl6');
 diag "Found perl6 at '$perl6'";
 ok $perl6.defined, "perl6 is found";
 ok $perl6.IO ~~ :e, "perl6 file exists";
-ok $perl6.IO ~~ :x, "perl6 and is an executable";
+if $*DISTRO.is-win {
+  skip("Windows does not set an executable file permission", 1);
+} else {
+  ok $perl6.IO ~~ :x, "perl6 and is an executable";
+}
