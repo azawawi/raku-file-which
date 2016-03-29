@@ -6,6 +6,7 @@ use File::Which::MacOSX;
 use File::Which::Win32;
 
 =begin pod
+
   File::Which finds the full or relative paths to an executable program on the
   system. This is normally the function of which utility which is typically
   implemented as either a program or a built in shell command. On some unfortunate

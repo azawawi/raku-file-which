@@ -1,6 +1,7 @@
 # File::Which
 
-This is a Perl 6 port of https://metacpan.org/pod/File::Which.
+This is a Perl 6 Object-oriented port of [File::Which (CPAN)](
+https://metacpan.org/pod/File::Which).
 
 File::Which finds the full or relative paths to an executable program on the
 system. This is normally the function of which utility which is typically
