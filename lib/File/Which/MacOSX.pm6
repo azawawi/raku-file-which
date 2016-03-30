@@ -5,7 +5,7 @@ unit class File::Which::MacOSX;
 
 method which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
-  fail("This only works on Mac OS X") unless $*DISTRO.name eq 'darwin';
+  fail("This only works on Mac OS X") unless $*DISTRO.name eq 'macosx';
 
   my @results;
 
