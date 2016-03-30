@@ -4,9 +4,9 @@ use Test;
 use lib 'lib';
 use File::Which;
 
-my @execs = ('calc', 'cmd', 'explorer', 'iexplore');
+my @execs = ('calc', 'cmd', 'explorer', 'iexplore', 'wordpad', 'notepad');
 
-plan @execs.elems;
+plan @execs.elems * 2;
 
 unless $*DISTRO.is-win {
   skip-rest("Windows-only tests");
@@ -15,6 +15,6 @@ unless $*DISTRO.is-win {
 
 for @execs -> $exec {
   my Str $path = which($exec);
-  diag sprintf("which('%s') = '%s'", $exec, $path.defined ?? $path !! "" );
-  ok $path.defined, sprintf("Found path for %s", $exec);
+  ok $path.defined, sprintf("Found '%s' at '%s'", $exec, $path);
+  ok $path.IO ~~ :e, sprintf("Path '%s' is found", $path);
 }

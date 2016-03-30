@@ -85,8 +85,9 @@ method which-win32-api(Str $exec) returns Str {
   return unless $hresult == S_OK;
 
   # Compose path from CArray using the size DWORD (uint32)
+  # Ignore null marker from null-terminated string
   my $exe-path = '';
-  for 0..$size[0] - 1 {
+  for 0..$size[0] - 2 {
     $exe-path ~= chr($path[$_]);
   }
 
