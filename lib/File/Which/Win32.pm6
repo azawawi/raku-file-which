@@ -5,6 +5,7 @@ unit class File::Which::Win32;
 
 method which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
+  fail("This only works on Windows") unless $*DISTRO.is-win;
 
   my @PATHEXT = '';
   # WinNT. PATHEXT might be set on Cygwin, but not used.
