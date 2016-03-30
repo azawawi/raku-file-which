@@ -3,6 +3,29 @@ use v6;
 
 unit class File::Which::Win32;
 
+use NativeCall;
+use File::Which;
+
+constant LIB      = 'shlwapi';
+
+constant ASSOCF_OPEN_BYEXENAME = 0x2;
+constant ASSOCSTR_EXECUTABLE   = 0x2;
+constant MAX_PATH              = 260;
+constant S_OK                  = 0;
+
+#
+#  HRESULT AssocQueryString(
+#    _In_      ASSOCF   flags,
+#    _In_      ASSOCSTR str,
+#    _In_      LPCTSTR  pszAssoc,
+#    _In_opt_  LPCTSTR  pszExtra,
+#    _Out_opt_ LPTSTR   pszOut,
+#    _Inout_   DWORD    *pcchOut
+#  );
+#
+sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
+  CArray[uint16] $path, CArray[uint32] $out) returns uint32 is native(LIB) { * };
+
 method which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
   fail("This only works on Windows") unless $*DISTRO.is-win;
@@ -44,7 +67,32 @@ method which(Str $exec, Bool :$all = False) {
   }
 
   return @results.unique if $all;
-  return;
+  # Fallback to using win32 API to find executable location
+  return which-win32-api($exec);
+}
+
+# This finds the executable path using the registry instead of the PATH
+# environment variable
+method which-win32-api(Str $exec) returns Str {
+  my $path = CArray[uint8].new;
+  $path[$_] = 0 for 0..MAX_PATH - 1;
+
+  my $size = CArray[uint32].new;
+  $size[0] = MAX_PATH;
+  my $hresult = AssocQueryStringA(ASSOCF_OPEN_BYEXENAME, ASSOCSTR_EXECUTABLE,
+    $exec, 0, $path, $size);
+
+  # Return nothing if it fails
+  return unless $hresult == S_OK;
+
+  # Compose path from CArray using the size DWORD (uint32)
+  my $exe-path = '';
+  for 0..$size[0] - 1 {
+    $exe-path ~= chr($path[$_]);
+  }
+
+  # Return the executable path string
+  return $exe-path;
 }
 
 =begin pod
