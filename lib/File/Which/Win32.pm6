@@ -4,7 +4,6 @@ use v6;
 unit class File::Which::Win32;
 
 use NativeCall;
-use File::Which;
 
 constant LIB      = 'shlwapi';
 
@@ -68,7 +67,7 @@ method which(Str $exec, Bool :$all = False) {
 
   return @results.unique if $all;
   # Fallback to using win32 API to find executable location
-  return which-win32-api($exec);
+  return self.which-win32-api($exec);
 }
 
 # This finds the executable path using the registry instead of the PATH
