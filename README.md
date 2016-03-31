@@ -13,13 +13,16 @@ This module provides a consistent API to this functionality regardless of the
 underlying platform.
 
 ```Perl6
-use File::Which;
+use File::Which :whence;
 
 # All perl executables in PATH
 say which('perl6', :all);
 
 # First executable in PATH
 say which('perl6');
+
+# Same as which('perl6')
+say whence('perl6');
 ```
 
 ## Build Status

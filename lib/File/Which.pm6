@@ -13,13 +13,16 @@ use File::Which::Win32;
   platforms, such as Microsoft Windows it is not provided as part of the core
   operating system.
 
-    use File::Which;
-    
-    # All perl executables in PATH
-    say which('perl6', :all);
-    
-    # First executable in PATH
-    say which('perl6');
+      use File::Which :whence;
+
+      # All perl executables in PATH
+      say which('perl6', :all);
+
+      # First executable in PATH
+      say which('perl6');
+
+      # Same as which('perl6')
+      say whence('perl6');
 
 =end pod
 unit module File::Which;
@@ -40,4 +43,8 @@ sub which(Str $exec, Bool :$all = False) is export {
   }
 
   return $platform.which($exec, :$all);
+}
+
+sub whence(Str $exec, Bool :$all = False) is export(:all, :whence) {
+  return which($exec, :$all);
 }
