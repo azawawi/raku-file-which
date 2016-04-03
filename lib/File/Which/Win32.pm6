@@ -5,26 +5,6 @@ unit class File::Which::Win32;
 
 use NativeCall;
 
-constant LIB      = 'shlwapi';
-
-constant ASSOCF_OPEN_BYEXENAME = 0x2;
-constant ASSOCSTR_EXECUTABLE   = 0x2;
-constant MAX_PATH              = 260;
-constant S_OK                  = 0;
-
-#
-#  HRESULT AssocQueryString(
-#    _In_      ASSOCF   flags,
-#    _In_      ASSOCSTR str,
-#    _In_      LPCTSTR  pszAssoc,
-#    _In_opt_  LPCTSTR  pszExtra,
-#    _Out_opt_ LPTSTR   pszOut,
-#    _Inout_   DWORD    *pcchOut
-#  );
-#
-sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
-  CArray[uint16] $path, CArray[uint32] $out) returns uint32 is native(LIB) { * };
-
 method which(Str $exec, Bool :$all = False) {
   fail("Exec parameter should be defined") unless $exec;
   fail("This only works on Windows") unless $*DISTRO.is-win;
@@ -70,9 +50,23 @@ method which(Str $exec, Bool :$all = False) {
   return self.which-win32-api($exec);
 }
 
+#
+# Searches for and retrieves a file or protocol association-related string from the registry.
+#
+# https://msdn.microsoft.com/en-us/library/windows/desktop/bb773471%28v=vs.85%29.aspx
+# https://source.winehq.org/WineAPI/AssocQueryStringA.html
+#
+sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
+  CArray[uint8] $path, CArray[uint32] $out) returns uint32 is native('shlwapi') { * };
+
 # This finds the executable path using the registry instead of the PATH
 # environment variable
 method which-win32-api(Str $exec) returns Str {
+  constant ASSOCF_OPEN_BYEXENAME = 0x2;
+  constant ASSOCSTR_EXECUTABLE   = 0x2;
+  constant MAX_PATH              = 260;
+  constant S_OK                  = 0;
+
   my $path = CArray[uint8].new;
   $path[$_] = 0 for 0..MAX_PATH - 1;
 
@@ -110,6 +104,12 @@ File::Which::Win32 - Win32 which implementation
 =head1 DESCRIPTION
 
 Implements the which method under win32-based platforms
+
+=head1 METHODS
+
+=head2 which
+
+Returns the full executable path string
 
 =head1 AUTHOR
 
