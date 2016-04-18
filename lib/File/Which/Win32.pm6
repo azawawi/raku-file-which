@@ -6,7 +6,7 @@ unit class File::Which::Win32;
 use NativeCall;
 
 method which(Str $exec, Bool :$all = False) {
-  fail("Exec parameter should be defined") unless $exec;
+  return Any unless $exec;
   fail("This only works on Windows") unless $*DISTRO.is-win;
 
   my @PATHEXT = '';

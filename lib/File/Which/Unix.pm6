@@ -4,7 +4,7 @@ use v6;
 unit class File::Which::Unix;
 
 method which(Str $exec, Bool :$all = False) {
-  fail("Exec parameter should be defined") unless $exec;
+  return Any unless $exec;
 
   my @results;
 
