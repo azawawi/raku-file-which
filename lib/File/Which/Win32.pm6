@@ -76,7 +76,7 @@ method which-win32-api(Str $exec) returns Str {
     $exec, 0, $path, $size);
 
   # Return nothing if it fails
-  return unless $hresult == S_OK;
+  return Any unless $hresult == S_OK;
 
   # Compose path from CArray using the size DWORD (uint32)
   # Ignore null marker from null-terminated string
