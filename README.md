@@ -54,6 +54,9 @@ $ prove -e "perl6 -Ilib"
 Perl 6 port:
 - Ahmad M. Zawawi, azawawi on #perl6, https://github.com/azawawi/
 
+A bit of tests:
+- Altai-man, sena_kun on freenode, https://github.com/Altai-man/
+
 Perl 5 version:
 - Author: Per Einar Ellefsen <pereinar@cpan.org>
 - Maintainers:
