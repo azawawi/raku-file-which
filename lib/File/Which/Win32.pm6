@@ -61,7 +61,7 @@ sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
 
 # This finds the executable path using the registry instead of the PATH
 # environment variable
-method which-win32-api(Str $exec) returns Str {
+method which-win32-api(Str $exec) {
   constant ASSOCF_OPEN_BYEXENAME = 0x2;
   constant ASSOCSTR_EXECUTABLE   = 0x2;
   constant MAX_PATH              = 260;
