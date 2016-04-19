@@ -1,13 +1,18 @@
 use v6;
 
 use Test;
+use lib 'lib';
 use File::Which;
 
 plan *;
 
 my $test-bin = $*SPEC.catdir('corpus', $*DISTRO.is-win ?? 'test-bin-win' !! 'test-bin-unix');
 ok $test-bin.IO.e, 'Found test-bin';
-%*ENV<PATH> ~= ":$test-bin";
+if $*DISTRO.is-win {
+  %*ENV<Path> ~= ";$test-bin";
+} else {
+  %*ENV<PATH> ~= ":$test-bin";
+}
 
 if $*KERNEL ~~ 'linux' {
   # On linux we need to have an execution bit.
