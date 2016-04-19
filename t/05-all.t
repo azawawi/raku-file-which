@@ -10,9 +10,9 @@ ok $test-bin.IO.e, 'Found test-bin';
 %*ENV<PATH> ~= ":$test-bin";
 
 if $*KERNEL ~~ 'linux' {
-    # On linux we need to have an execution bit.
-    my $all = $*SPEC.catfile($test-bin, 'all');
-    chmod 0o755, $all;
+  # On linux we need to have an execution bit.
+  my $all = $*SPEC.catfile($test-bin, 'all');
+  chmod 0o755, $all;
 }
 
 my @result = which('all');
@@ -20,9 +20,9 @@ like @result[0], rx/all/, 'Found all';
 ok @result.defined, 'Found at least one result';
 
 if $*KERNEL ~~ 'linux' {
-    # On linux we need to have an execution bit.
-    my $zero = $*SPEC.catfile($test-bin, '0');
-    chmod 0o755, $zero;
+  # On linux we need to have an execution bit.
+  my $zero = $*SPEC.catfile($test-bin, '0');
+  chmod 0o755, $zero;
 }
 
 my $zero = which '0';

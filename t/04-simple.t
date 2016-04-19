@@ -13,20 +13,20 @@ my $test-bin = $*SPEC.catdir('corpus', $*DISTRO.is-win ?? 'test-bin-win' !! 'tes
 ok $test-bin.IO.e, 'Found test-bin';
 %*ENV<PATH> ~= ":$test-bin";
 unless (File::Which::MacOSX || File::Which::Win32) {
-    my $test3 = $*SPEC.catfile($test-bin, 'test3');
-    chmod 0o755, $test3;
+  my $test3 = $*SPEC.catfile($test-bin, 'test3');
+  chmod 0o755, $test3;
 }
 
 if $*KERNEL ~~ 'linux' {
-    is which('test3'), $*SPEC.catfile($test-bin, 'test3'), 'Check test3 for Unix';
+  is which('test3'), $*SPEC.catfile($test-bin, 'test3'), 'Check test3 for Unix';
 }
 
 if $*DISTRO.is-win {
-    is which('test1'), $*SPEC.catfile($test-bin, "test1.exe"), 'Looking for test1.exe';
-    is which('test2'), $*SPEC.catfile($test-bin, "test2.bat"), 'Looking for test2.bat';
-    is which('test3'), Any, 'test3 returns Any';
-    chdir($test-bin);
-    is which('test1'), $*SPEC.catfile($*SPEC.curdir, 'test1.exe'), 'Looking for test1.exe in curdir';
+  is which('test1'), $*SPEC.catfile($test-bin, "test1.exe"), 'Looking for test1.exe';
+  is which('test2'), $*SPEC.catfile($test-bin, "test2.bat"), 'Looking for test2.bat';
+  is which('test3'), Any, 'test3 returns Any';
+  chdir($test-bin);
+  is which('test1'), $*SPEC.catfile($*SPEC.curdir, 'test1.exe'), 'Looking for test1.exe in curdir';
 }
 
 done-testing;
