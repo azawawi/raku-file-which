@@ -4,7 +4,7 @@ use v6;
 unit class File::Which::MacOSX;
 
 method which(Str $exec, Bool :$all = False) {
-  fail("Exec parameter should be defined") unless $exec;
+  return Any unless $exec;
   fail("This only works on Mac OS X") unless $*DISTRO.name eq 'macosx';
 
   my @results;
@@ -46,7 +46,7 @@ method which(Str $exec, Bool :$all = False) {
   }
 
   return @results.unique if $all;
-  return;
+  return Any;
 }
 
 =begin pod

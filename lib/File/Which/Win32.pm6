@@ -6,7 +6,7 @@ unit class File::Which::Win32;
 use NativeCall;
 
 method which(Str $exec, Bool :$all = False) {
-  fail("Exec parameter should be defined") unless $exec;
+  return Any unless $exec;
   fail("This only works on Windows") unless $*DISTRO.is-win;
 
   my @PATHEXT = '';
@@ -61,7 +61,7 @@ sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
 
 # This finds the executable path using the registry instead of the PATH
 # environment variable
-method which-win32-api(Str $exec) returns Str {
+method which-win32-api(Str $exec) {
   constant ASSOCF_OPEN_BYEXENAME = 0x2;
   constant ASSOCSTR_EXECUTABLE   = 0x2;
   constant MAX_PATH              = 260;
@@ -76,7 +76,7 @@ method which-win32-api(Str $exec) returns Str {
     $exec, 0, $path, $size);
 
   # Return nothing if it fails
-  return unless $hresult == S_OK;
+  return Any unless $hresult == S_OK;
 
   # Compose path from CArray using the size DWORD (uint32)
   # Ignore null marker from null-terminated string
