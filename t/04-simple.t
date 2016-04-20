@@ -10,7 +10,7 @@ is which(''), Any, 'Null-length false result';
 
 is which('non_existent_very_unlinkely_thingy_executable'), Any, 'Positive length false result';
 
-my $test-bin = $*SPEC.catdir('corpus', $*DISTRO.is-win ?? 'test-bin-win' !! 'test-bin-unix');
+my $test-bin = $*SPEC.catdir('t', 'corpus', $*DISTRO.is-win ?? 'test-bin-win' !! 'test-bin-unix');
 ok $test-bin.IO.e, 'Found test-bin';
 if $*DISTRO.is-win {
   %*ENV<Path> ~= ";$test-bin";
