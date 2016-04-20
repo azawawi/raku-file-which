@@ -1,5 +1,7 @@
 # File::Which
 
+[![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which) [![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)
+
 This is a Perl 6 Object-oriented port of [File::Which (CPAN)](
 https://metacpan.org/pod/File::Which).
 
@@ -24,13 +26,6 @@ say which('perl6');
 # Same as which('perl6')
 say whence('perl6');
 ```
-
-## Build Status
-
-| Operating System  |   Build Status  | CI Provider |
-| ----------------- | --------------- | ----------- |
-| Linux / Mac OS X  | [![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which)  | Travis CI |
-| Windows 7 64-bit  | [![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)  | AppVeyor |
 
 ## Installation
 
