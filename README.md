@@ -39,14 +39,14 @@ $ zef install File::Which
 
 - To run tests:
 ```
-$ prove -e "perl6 -Ilib"
+$ prove -ve "perl6 -Ilib"
 ```
 
 - To run all tests including author tests (Please make sure
 [Test::Meta](https://github.com/jonathanstowe/Test-META) is installed):
 $ zef install Test::META
 ```
-$ TEST_AUTHOR=1 prove -e "perl6 -Ilib"
+$ TEST_AUTHOR=1 prove -ve "perl6 -Ilib"
 ```
 
 ## Author
