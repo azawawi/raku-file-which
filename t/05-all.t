@@ -9,7 +9,7 @@ plan *;
 my $test-bin = $*SPEC.catdir('t', 'corpus', $*DISTRO.is-win ?? 'test-bin-win' !! 'test-bin-unix');
 ok $test-bin.IO.e, 'Found test-bin';
 if $*DISTRO.is-win {
-  %*ENV<Path> ~= ";$test-bin";
+  %*ENV<PATH> ~= ";$test-bin";
 } else {
   %*ENV<PATH> ~= ":$test-bin";
 }
