@@ -3,7 +3,7 @@ use v6;
 use Test;
 use File::Which;
 
-my @execs = ('calc', 'cmd', 'explorer', 'wordpad', 'notepad');
+my @execs = ('calc', 'cmd', 'explorer', 'notepad');
 
 plan @execs.elems * 2;
 
