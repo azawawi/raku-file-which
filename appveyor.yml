@@ -15,8 +15,6 @@ install:
   - zef install Test::META
   - zef build .
 
-build: off
-
 test_script:
   - prove -ve "perl6 -Ilib"
   - set TEST_AUTHOR=1 && prove -ve "perl6 -Ilib"
