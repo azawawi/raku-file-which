@@ -45,7 +45,7 @@ method which(Str $exec, Bool :$all = False) {
     }
   }
 
-  return @results.unique if $all;
+  return @results.unique if $all && @results;
   # Fallback to using win32 API to find executable location
   return self.which-win32-api($exec);
 }
