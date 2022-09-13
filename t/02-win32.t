@@ -1,9 +1,10 @@
 use v6;
 
+use lib 'lib';
 use Test;
 use File::Which;
 
-my @execs = ('calc', 'cmd', 'explorer', 'notepad');
+my @execs = ('calc', 'cmd', 'explorer', 'notepad', 'wordpad');
 
 plan @execs.elems * 2;
 
