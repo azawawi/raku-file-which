@@ -77,7 +77,7 @@ method which-win32-api(Str $exec, @paths) {
     $exec, 0, $path, $size);
 
   # Return nothing if it fails
-  when $hresult == S_OK {
+  if $hresult == S_OK {
       # Compose path from CArray using the size DWORD (uint32)
       # Ignore null marker from null-terminated string
       my $exe-path = '';
@@ -99,7 +99,6 @@ method which-win32-api(Str $exec, @paths) {
 
   my @hives-to-check = <local_machine current_user>;
   my $key = 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths';
-  my @found-paths;
   for @keys-to-check -> $k {
       for @hives-to-check -> $h {
           my $full-key = $h ~ "\\$key\\$k";
@@ -123,19 +122,15 @@ sub get-path(Str:D $key) {
     $value[$b] = 0;
     if !$blah {
         for ^$b {
-            $name ~= chr($value[$_]);
             last if !$value[$_].so;
+            $name ~= chr($value[$_]);
         }
     }
-    # clean-up $name
     close-key $k;
 
     # Sometimes, the path is surrounded by quotes for some reason. Remove them.
     $name.=trans( '"' => '');
-
-    # remove null character if it
-    $name.chop(1) if $name.substr(*-1) eq chr(0);
-    return $name.chop(1);
+    return $name;
 }
 
 =begin pod
