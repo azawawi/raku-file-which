@@ -3,6 +3,7 @@ use v6;
 
 unit class File::Which::Win32;
 
+use Win32::Registry;
 use NativeCall;
 
 method which(Str $exec, Bool :$all = False) {
@@ -47,7 +48,7 @@ method which(Str $exec, Bool :$all = False) {
 
   return @results.unique if $all && @results;
   # Fallback to using win32 API to find executable location
-  return self.which-win32-api($exec);
+  return self.which-win32-api($exec, @PATHEXT) || Any;
 }
 
 #
@@ -61,7 +62,7 @@ sub AssocQueryStringA(uint32 $flags, uint32 $str, Str $assoc, uint32 $extra,
 
 # This finds the executable path using the registry instead of the PATH
 # environment variable
-method which-win32-api(Str $exec) {
+method which-win32-api(Str $exec, @paths) {
   constant ASSOCF_OPEN_BYEXENAME = 0x2;
   constant ASSOCSTR_EXECUTABLE   = 0x2;
   constant MAX_PATH              = 260;
@@ -76,17 +77,60 @@ method which-win32-api(Str $exec) {
     $exec, 0, $path, $size);
 
   # Return nothing if it fails
-  return Any unless $hresult == S_OK;
+  if $hresult == S_OK {
+      # Compose path from CArray using the size DWORD (uint32)
+      # Ignore null marker from null-terminated string
+      my $exe-path = '';
+      for 0 .. $size[0] - 2 {
+          $exe-path ~= chr($path[$_]);
+      }
 
-  # Compose path from CArray using the size DWORD (uint32)
-  # Ignore null marker from null-terminated string
-  my $exe-path = '';
-  for 0..$size[0] - 2 {
-    $exe-path ~= chr($path[$_]);
+      # Return the executable path string if found
+      return $exe-path if $exe-path;
   }
 
-  # Return the executable path string
-  return $exe-path;
+  # search registry for apps
+  my $has-extension = @paths.first({ $exec.ends-with($_, :i)}).so;
+
+  my @keys-to-check;
+  @keys-to-check = $has-extension
+          ?? $exec
+          !! @paths.map: { $exec ~ $_ } ;
+
+  my @hives-to-check = <local_machine current_user>;
+  my $key = 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths';
+  for @keys-to-check -> $k {
+      for @hives-to-check -> $h {
+          my $full-key = $h ~ "\\$key\\$k";
+          if key-exists($full-key) {
+              return get-path $full-key;
+          }
+      }
+  }
+}
+
+sub get-path(Str:D $key) {
+    my $k = open-key($key);
+
+    my int32 $b = 600;
+    my $value = CArray[uint16].new;
+    $value[$_] = 0 for ^$b;
+
+    my $blah = RegGetValueW($k, wstr(''), wstr(''), 0x0000ffff, 0,
+            $value, $b);
+    my $name = '';
+    $value[$b] = 0;
+    if !$blah {
+        for ^$b {
+            last if !$value[$_].so;
+            $name ~= chr($value[$_]);
+        }
+    }
+    close-key $k;
+
+    # Sometimes, the path is surrounded by quotes for some reason. Remove them.
+    $name.=trans( '"' => '');
+    return $name;
 }
 
 =begin pod
