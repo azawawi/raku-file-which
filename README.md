@@ -1,6 +1,6 @@
 # File::Which
 
-[![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which) [![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)
 
 This is a Raku Object-oriented port of [File::Which (CPAN)](
 https://metacpan.org/pod/File::Which).
