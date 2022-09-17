@@ -8,20 +8,13 @@ use File::Which::Win32;
 unit module File::Which;
 
 # Current which platform-specific implementation
-my $platform;
+BEGIN my $platform = $*DISTRO.is-win
+  ?? File::Which::Win32.new
+  !! $*DISTRO.name.starts-with('macos')
+    ?? File::Which::MacOSX.new
+    !! File::Which::Unix.new;
 
 sub which(Str $exec, Bool :$all = False) is export {
-
-  unless $platform.defined {
-    if $*DISTRO.is-win {
-      $platform = File::Which::Win32.new;
-    } elsif $*DISTRO.name eq 'macosx' {
-      $platform = File::Which::MacOSX.new;
-    } else {
-      $platform = File::Which::Unix.new;
-    }
-  }
-
   return $platform.which($exec, :$all);
 }
 

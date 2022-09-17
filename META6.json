@@ -5,7 +5,14 @@
   "perl"         : "6.c",
   "description"  : "Cross platform Raku executable path finder (aka which on UNIX)",
   "depends"      : [
-    "Win32::Registry"
+    {
+      "name" : {
+        "by-distro.name" : {
+          "mswin32" : "Win32::Registry",
+          "" : ""
+        }
+      }
+    }
   ],
   "test-depends" : [ "Test" ],
   "provides"     : {

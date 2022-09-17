@@ -3,8 +3,9 @@ use v6;
 
 unit class File::Which::Win32;
 
-use Win32::Registry;
 use NativeCall;
+
+try require Win32::Registry qw<AssocQueryStringA RegGetValueW key-exists open-key close-key wstr>;
 
 method which(Str $exec, Bool :$all = False) {
   return Any unless $exec;
@@ -73,7 +74,7 @@ method which-win32-api(Str $exec, @paths) {
 
   my $size = CArray[uint32].new;
   $size[0] = MAX_PATH;
-  my $hresult = AssocQueryStringA(ASSOCF_OPEN_BYEXENAME, ASSOCSTR_EXECUTABLE,
+  my $hresult = &::("AssocQueryStringA")(ASSOCF_OPEN_BYEXENAME, ASSOCSTR_EXECUTABLE,
     $exec, 0, $path, $size);
 
   # Return nothing if it fails
@@ -102,7 +103,7 @@ method which-win32-api(Str $exec, @paths) {
   for @keys-to-check -> $k {
       for @hives-to-check -> $h {
           my $full-key = $h ~ "\\$key\\$k";
-          if key-exists($full-key) {
+          if &::("key-exists")($full-key) {
               return get-path $full-key;
           }
       }
@@ -110,13 +111,13 @@ method which-win32-api(Str $exec, @paths) {
 }
 
 sub get-path(Str:D $key) {
-    my $k = open-key($key);
+    my $k = &::("open-key")($key);
 
     my int32 $b = 600;
     my $value = CArray[uint16].new;
     $value[$_] = 0 for ^$b;
 
-    my $blah = RegGetValueW($k, wstr(''), wstr(''), 0x0000ffff, 0,
+    my $blah = &::("RegGetValueW")($k, &::("wstr")(''), &::("wstr")(''), 0x0000ffff, 0,
             $value, $b);
     my $name = '';
     $value[$b] = 0;
@@ -126,7 +127,7 @@ sub get-path(Str:D $key) {
             $name ~= chr($value[$_]);
         }
     }
-    close-key $k;
+    &::("close-key")($k);
 
     # Sometimes, the path is surrounded by quotes for some reason. Remove them.
     $name.=trans( '"' => '');
