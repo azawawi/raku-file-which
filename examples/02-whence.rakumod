@@ -1,10 +1,10 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use v6;
 use File::Which :whence;
 
 # All perl executables in PATH
-say whence('perl6', :all);
+say whence('raku', :all);
 
 # First executable in PATH
-say whence('perl6');
+say whence('raku');
