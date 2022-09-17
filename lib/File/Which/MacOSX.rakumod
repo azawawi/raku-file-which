@@ -5,7 +5,7 @@ unit class File::Which::MacOSX;
 
 method which(Str $exec, Bool :$all = False) {
   return Any unless $exec;
-  fail("This only works on Mac OS X") unless $*DISTRO.name eq 'macosx';
+  fail("This only works on Mac OS X") unless $*DISTRO.name.starts-with('macos');
 
   my @results;
 
