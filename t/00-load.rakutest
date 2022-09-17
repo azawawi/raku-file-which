@@ -1,0 +1,9 @@
+use Test;
+plan 4;
+
+use-ok("File::Which::MacOSX");
+use-ok("File::Which::Unix");
+use-ok("File::Which::Win32");
+use-ok("File::Which");
+
+done-testing();
