@@ -43,7 +43,7 @@ File::Which::Unix - Linux/Unix which implementation
 
   use File::Which::Unix;
   my $o = File::Which::Unix.new;
-  say $o.which('perl6');
+  say $o.which('raku');
 
 =head1 DESCRIPTION
 

@@ -144,7 +144,7 @@ File::Which::Win32 - Win32 which implementation
 
   use File::Which::Win32;
   my $o = File::Which::Win32.new;
-  say $o.which('perl6');
+  say $o.which('raku');
 
 =head1 DESCRIPTION
 

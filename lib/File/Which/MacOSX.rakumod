@@ -59,7 +59,7 @@ File::Which::MacOSX - MacOSX which implementation
 
   use File::Which::MacOSX;
   my $o = File::Which::MacOSX.new;
-  say $o.which('perl6');
+  say $o.which('raku');
 
 =head1 DESCRIPTION
 
