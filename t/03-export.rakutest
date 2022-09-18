@@ -1,0 +1,18 @@
+use v6;
+
+use Test;
+
+plan 4;
+
+use File::Which :whence;
+ok 1, "'use File::Which :whence' worked!";
+
+my $raku = whence('raku');
+diag "Found raku at '$raku' using whence";
+ok $raku.defined, "raku is found";
+ok $raku.IO ~~ :e, "raku file exists";
+if $*DISTRO.is-win {
+  skip("Windows does not set an executable file permission", 1);
+} else {
+  ok $raku.IO ~~ :x, "raku and is an executable";
+}

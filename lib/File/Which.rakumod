@@ -8,20 +8,13 @@ use File::Which::Win32;
 unit module File::Which;
 
 # Current which platform-specific implementation
-my $platform;
+BEGIN my $platform = $*DISTRO.is-win
+  ?? File::Which::Win32.new
+  !! $*DISTRO.name.starts-with('macos')
+    ?? File::Which::MacOSX.new
+    !! File::Which::Unix.new;
 
 sub which(Str $exec, Bool :$all = False) is export {
-
-  unless $platform.defined {
-    if $*DISTRO.is-win {
-      $platform = File::Which::Win32.new;
-    } elsif $*DISTRO.name eq 'macosx' {
-      $platform = File::Which::MacOSX.new;
-    } else {
-      $platform = File::Which::Unix.new;
-    }
-  }
-
   return $platform.which($exec, :$all);
 }
 
@@ -33,24 +26,24 @@ sub whence(Str $exec, Bool :$all = False) is export(:all, :whence) {
 
 =head1 NAME
 
-File::Which - Cross platform Perl 6 executable path finder (aka which on UNIX)
+File::Which - Cross platform Raku executable path finder (aka which on UNIX)
 
 =head1 SYNOPSIS
 
   use File::Which :whence;
 
-  # All perl executables in PATH
-  say which('perl6', :all);
+  # All raku executables in PATH
+  say which('raku', :all);
 
   # First executable in PATH
-  say which('perl6');
+  say which('raku');
 
-  # Same as which('perl6')
-  say whence('perl6');
+  # Same as which('raku')
+  say whence('raku');
 
 =head1 DESCRIPTION
 
-This is a Perl 6 Object-oriented port of L<File::Which (CPAN)|https://metacpan.org/pod/File::Which>.
+This is a Raku Object-oriented port of L<File::Which (CPAN)|https://metacpan.org/pod/File::Which>.
 
 File::Which finds the full or relative paths to an executable program on the
 system. This is normally the function of which utility which is typically

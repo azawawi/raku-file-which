@@ -3,16 +3,23 @@
   "license"      : "MIT",
   "version"      : "1.0.2",
   "perl"         : "6.c",
-  "description"  : "Cross platform Perl 6 executable path finder (aka which on UNIX)",
+  "description"  : "Cross platform Raku executable path finder (aka which on UNIX)",
   "depends"      : [
-    "Win32::Registry"
+    {
+      "name" : {
+        "by-distro.name" : {
+          "mswin32" : "Win32::Registry",
+          "" : ""
+        }
+      }
+    }
   ],
   "test-depends" : [ "Test" ],
   "provides"     : {
-    "File::Which"          : "lib/File/Which.pm6",
-    "File::Which::MacOSX"  : "lib/File/Which/MacOSX.pm6",
-    "File::Which::Unix"    : "lib/File/Which/Unix.pm6",
-    "File::Which::Win32"   : "lib/File/Which/Win32.pm6"
+    "File::Which"          : "lib/File/Which.rakumod",
+    "File::Which::MacOSX"  : "lib/File/Which/MacOSX.rakumod",
+    "File::Which::Unix"    : "lib/File/Which/Unix.rakumod",
+    "File::Which::Win32"   : "lib/File/Which/Win32.rakumod"
   },
   "source-url"   : "git://github.com/azawawi/perl6-file-which.git"
 }

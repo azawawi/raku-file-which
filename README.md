@@ -1,8 +1,8 @@
 # File::Which
 
-[![Build Status](https://travis-ci.org/azawawi/perl6-file-which.svg?branch=master)](https://travis-ci.org/azawawi/perl6-file-which) [![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/azawawi/perl6-file-which?svg=true)](https://ci.appveyor.com/project/azawawi/perl6-file-which/branch/master)
 
-This is a Perl 6 Object-oriented port of [File::Which (CPAN)](
+This is a Raku Object-oriented port of [File::Which (CPAN)](
 https://metacpan.org/pod/File::Which).
 
 File::Which finds the full or relative paths to an executable program on the
@@ -14,17 +14,17 @@ operating system.
 This module provides a consistent API to this functionality regardless of the
 underlying platform.
 
-```Perl6
+```Raku
 use File::Which :whence;
 
-# All perl executables in PATH
-say which('perl6', :all);
+# All raku executables in PATH
+say which('raku', :all);
 
 # First executable in PATH
-say which('perl6');
+say which('raku');
 
-# Same as which('perl6')
-say whence('perl6');
+# Same as which('raku')
+say whence('raku');
 ```
 
 ## Installation
@@ -39,23 +39,23 @@ $ zef install File::Which
 
 - To run tests:
 ```
-$ prove -ve "perl6 -Ilib"
+$ prove --ext .rakutest -ve "raku -I."
 ```
 
 - To run all tests including author tests (Please make sure
 [Test::Meta](https://github.com/jonathanstowe/Test-META) is installed):
 ```
 $ zef install Test::META
-$ TEST_AUTHOR=1 prove -ve "perl6 -Ilib"
+$ TEST_AUTHOR=1 prove --ext .rakutest -ve "raku -I."
 ```
 
 ## Author
 
-Perl 6 port:
-- Ahmad M. Zawawi, azawawi on #perl6, https://github.com/azawawi/
+Raku port:
+- Ahmad M. Zawawi, azawawi on #raku, https://github.com/azawawi/
 
 A bit of tests:
-- Altai-man, sena_kun on freenode, https://github.com/Altai-man/
+- Altai-man, sena_kun on libera, https://github.com/Altai-man/
 
 Perl 5 version:
 - Author: Per Einar Ellefsen <pereinar@cpan.org>
