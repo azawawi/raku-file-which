@@ -21,5 +21,5 @@
     "File::Which::Unix"    : "lib/File/Which/Unix.rakumod",
     "File::Which::Win32"   : "lib/File/Which/Win32.rakumod"
   },
-  "source-url"   : "git://github.com/azawawi/perl6-file-which.git"
+  "source-url"   : "git://github.com/azawawi/raku-file-which.git"
 }
