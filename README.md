@@ -54,6 +54,8 @@ $ TEST_AUTHOR=1 prove --ext .rakutest -ve "raku -I."
 
 Raku port:
 - Ahmad M. Zawawi, azawawi on #raku, https://github.com/azawawi/
+- Nick Logan, ugexe on #raku, https://github.com/ugexe
+- Steve Dondley, sdondley on #raku, https://github.com/sdondley
 
 A bit of tests:
 - Altai-man, sena_kun on libera, https://github.com/Altai-man/
