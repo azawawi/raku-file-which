@@ -5,7 +5,7 @@ unit class File::Which::Win32;
 
 use NativeCall;
 
-try require Win32::Registry qw<AssocQueryStringA RegGetValueW key-exists open-key close-key wstr>;
+try require Win32::Registry qw<&RegGetValueW &key-exists &open-key &close-key &wstr>;
 
 method which(Str $exec, Bool :$all = False) {
   return Any unless $exec;
